@@ -83,9 +83,8 @@ class _AdvancedTableState extends State<AdvancedTable> {
     } else if (value is Enum) {
       textValue = value.name;
     } else if (value is List) {
-      assert(widget.config.listWrapper.length == 2);
       final String joined = value.join('${widget.config.listSeparator} ');
-      textValue = widget.config.listWrapper[0] + joined + widget.config.listWrapper[1];
+      textValue = widget.config.listWrapper.left + joined + widget.config.listWrapper.right;
     } else {
       throw StateError('Type ${value.runtimeType} not supported');
     }
