@@ -4,7 +4,7 @@
 /// final config = AdvancedTableConfig(listSeparator: ';', listWrapper: ListWrapper.curly);
 /// ```
 class AdvancedTableConfig {
-  /// Separator for a `ColumnDefinition` for a `List`.
+  /// Separator for a `ColumnDefinition` with type `List`.
   ///
   /// Default is ','
   final String listSeparator;
