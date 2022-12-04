@@ -1,15 +1,20 @@
-import 'package:advanced_table/src/column_definition.dart';
+import 'package:advanced_table/advanced_table.dart';
 import 'package:flutter/material.dart';
 
+/// Creates an advanced table wrapper widget around `Table`.
 ///
+/// `columnDefinitions` and `data` must be provided.
 class AdvancedTable extends StatefulWidget {
-  ///
+  /// Configuration info for each individual column
   final List<ColumnDefinition> columnDefinitions;
 
-  ///
+  /// Data to be displayed
   final List<Map<String, dynamic>> data;
 
-  ///
+  /// Configuration info for this widget
+  final AdvancedTableConfig config;
+
+  /// Border to be created
   final TableBorder? border;
 
   AdvancedTable({
@@ -17,6 +22,7 @@ class AdvancedTable extends StatefulWidget {
     required this.columnDefinitions,
     required this.data,
     this.border,
+    this.config = const AdvancedTableConfig(),
   }) {
     final int columnCount = columnDefinitions.length;
     for (var dataEntry in data) {
@@ -39,7 +45,9 @@ class _AdvancedTableState extends State<AdvancedTable> {
       children: <TableRow>[
         TableRow(
           children: widget.columnDefinitions
-              .map((columnDefinition) => TableCell(child: columnDefinition.title))
+              .map((columnDefinition) => TableCell(
+                    child: columnDefinition.title,
+                  ))
               .toList(),
         ),
         ...widget.data.map((jsonMap) => TableRow(
@@ -50,6 +58,8 @@ class _AdvancedTableState extends State<AdvancedTable> {
     );
   }
 
+  /// Returns a `Text` widget using `valueKey` and `value`, a `MapEntry` obtained
+  /// from [AdvancedTable.data]
   Widget _buildDataCell(final String valueKey, final dynamic value) {
     // Find applicable column
     final ColumnDefinition columnDefinition = widget.columnDefinitions.firstWhere(
@@ -61,20 +71,30 @@ class _AdvancedTableState extends State<AdvancedTable> {
     final Type type = columnDefinition.type;
     if (value.runtimeType != type) {
       throw StateError(
-          'Provided type $type of value does not match column definition type ${columnDefinition.type}');
+          'Provided type ${value.runtimeType} of value $value does not match column definition type $type');
     }
 
+    dynamic textValue;
+    // Check type and transform value
     if (value is String) {
-      return Text(value);
+      textValue = value;
     } else if (value is num) {
-      return Text(value.toString());
+      textValue = value.toString();
     } else if (value is Enum) {
-      return Text(value.name);
+      textValue = value.name;
     } else if (value is List) {
-      final String joined = value.join(', ');
-      return Text(joined);
+      assert(widget.config.listWrapper.length == 2);
+      final String joined = value.join('${widget.config.listSeparator} ');
+      textValue = widget.config.listWrapper[0] + joined + widget.config.listWrapper[1];
     } else {
       throw StateError('Type ${value.runtimeType} not supported');
     }
+
+    return TableCell(
+      child: Text(
+        textValue,
+        textAlign: columnDefinition.valueAlignment,
+      ),
+    );
   }
 }
