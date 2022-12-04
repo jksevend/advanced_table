@@ -12,30 +12,26 @@ class AdvancedTable extends StatefulWidget {
   ///
   final TableBorder? border;
 
-  const AdvancedTable({
+  AdvancedTable({
     super.key,
     required this.columnDefinitions,
     required this.data,
     this.border,
-  });
+  }) {
+    final int columnCount = columnDefinitions.length;
+    for (var dataEntry in data) {
+      if (dataEntry.keys.length != columnCount) {
+        throw StateError(
+            'Count of columns $columnCount does not match data entry key count ${dataEntry.keys.length}: ${dataEntry.keys}');
+      }
+    }
+  }
 
   @override
   State<AdvancedTable> createState() => _AdvancedTableState();
 }
 
 class _AdvancedTableState extends State<AdvancedTable> {
-  @override
-  void initState() {
-    final int columnCount = widget.columnDefinitions.length;
-    widget.data.map((entry) {
-      if (entry.keys.length != columnCount) {
-        throw StateError(
-            'Count of columns $columnCount does not match data entry key count ${entry.keys.length}: ${entry.keys}');
-      }
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Table(
@@ -60,14 +56,14 @@ class _AdvancedTableState extends State<AdvancedTable> {
       (element) => element.valueKey == valueKey,
       orElse: () => throw StateError('No column definition found for $valueKey'),
     );
-    
+
     // Check if types match
     final Type type = columnDefinition.type;
     if (value.runtimeType != type) {
       throw StateError(
           'Provided type $type of value does not match column definition type ${columnDefinition.type}');
     }
-    
+
     if (value is String) {
       return Text(value);
     } else if (value is num) {
