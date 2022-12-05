@@ -15,14 +15,14 @@ class AdvancedTable extends StatefulWidget {
   final AdvancedTableConfig config;
 
   /// Border to be created
-  final TableBorder? border;
+  final TableBorder? border = TableBorder.all();
 
   AdvancedTable({
     super.key,
     required this.columnDefinitions,
     required this.data,
-    this.border,
     this.config = const AdvancedTableConfig(),
+    TableBorder? border,
   }) {
     final int columnCount = columnDefinitions.length;
     for (var dataEntry in data) {
@@ -52,26 +52,31 @@ class _AdvancedTableState extends State<AdvancedTable> {
         ),
         ...widget.data.map((jsonMap) => TableRow(
             children: jsonMap.entries
-                .map((mapEntry) => _buildDataCell(mapEntry.key, mapEntry.value))
+                .map((mapEntry) => _buildDataCell(mapEntry))
                 .toList()))
       ],
     );
   }
 
-  /// Returns a `Text` widget using `valueKey` and `value`, a `MapEntry` obtained
+  /// Returns a `TableCell` widget using a `MapEntry` obtained
   /// from [AdvancedTable.data]
-  Widget _buildDataCell(final String valueKey, final dynamic value) {
+  Widget _buildDataCell(final MapEntry<String, dynamic> entry) {
     // Find applicable column
-    final ColumnDefinition columnDefinition = widget.columnDefinitions.firstWhere(
-      (element) => element.valueKey == valueKey,
-      orElse: () => throw StateError('No column definition found for $valueKey'),
+    final ColumnDefinition columnDefinition =
+        widget.columnDefinitions.firstWhere(
+      (element) => element.valueKey == entry.key,
+      orElse: () =>
+          throw StateError('No column definition found for ${entry.key}'),
     );
 
+    final dynamic value = entry.value;
+
     // Check if types match
-    final Type type = columnDefinition.type;
-    if (value.runtimeType != type) {
+    final Type columnDefinitionType = columnDefinition.type;
+    final Type valueType = value.runtimeType;
+    if (columnDefinitionType != valueType) {
       throw StateError(
-          'Provided type ${value.runtimeType} of value $value does not match column definition type $type');
+          'Provided type $valueType of value $value does not match column definition type $columnDefinitionType');
     }
 
     dynamic textValue;
@@ -84,7 +89,9 @@ class _AdvancedTableState extends State<AdvancedTable> {
       textValue = value.name;
     } else if (value is List) {
       final String joined = value.join('${widget.config.listSeparator} ');
-      textValue = widget.config.listWrapper.left + joined + widget.config.listWrapper.right;
+      textValue = widget.config.listWrapper.left +
+          joined +
+          widget.config.listWrapper.right;
     } else {
       throw StateError('Type ${value.runtimeType} not supported');
     }
