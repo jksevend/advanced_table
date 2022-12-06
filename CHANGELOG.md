@@ -10,7 +10,3 @@
 * Add config class and text align of columns ([fa42ba5](https://github.com/jksevend/advanced_table/commit/fa42ba56e05f93f19c4598ec7f26cb49dc7d7535))
 * Allow generic Objects as data Type ([e875090](https://github.com/jksevend/advanced_table/commit/e87509093fdb3900cb895366a4b377b912d9aaa0))
 * Introduce ListWrapper enum instead of raw string ([573bc0f](https://github.com/jksevend/advanced_table/commit/573bc0f12a02557963e17a47f6f9be5bc484539a))
-
-## 0.0.1
-
-* TODO: Describe initial release.
