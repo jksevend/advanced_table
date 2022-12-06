@@ -19,45 +19,46 @@ class _ExampleAppState extends State<ExampleApp> {
     return MaterialApp(
       title: 'Example',
       home: Scaffold(
-        body: AdvancedTable(
-          columnDefinitions: [
-            ColumnDefinition<int>(valueKey: 'age', title: const Text('Age')),
-            ColumnDefinition<String>(
-                valueKey: 'firstName', title: const Text('First name')),
-            ColumnDefinition<String>(
-                valueKey: 'lastName', title: const Text('Last name')),
-            ColumnDefinition<Gender>(
-                valueKey: 'gender', title: const Text('Gender')),
-            ColumnDefinition<List<String>>(
-                valueKey: 'favouriteFood', title: const Text('Favourite Food')),
-          ],
-          data: <Person>[
-            Person(
-                age: 17,
-                firstName: 'Hallo',
-                lastName: 'Welt',
-                gender: Gender.male,
-                favouriteFood: ['This', 'That']),
-            Person(
-                age: 17,
-                firstName: 'Hallo',
-                lastName: 'Welt',
-                gender: Gender.male,
-                favouriteFood: ['This', 'That']),
-            Person(
-                age: 17,
-                firstName: 'Hallo',
-                lastName: 'Welt',
-                gender: Gender.male,
-                favouriteFood: ['This', 'That']),
-            Person(
-                age: 17,
-                firstName: 'Hallo',
-                lastName: 'Welt',
-                gender: Gender.male,
-                favouriteFood: ['This', 'That'])
-          ].map((person) => person.toJson()).toList(),
-        ),
+        body: AdvancedTable<Person>(columnDefinitions: [
+          ColumnDefinition<int>(
+              valueKey: 'age', title: const Text('Age'), valueAlignment: TextAlign.center),
+          ColumnDefinition<String>(
+              valueKey: 'firstName',
+              title: const Text('First name'),
+              valueAlignment: TextAlign.center),
+          ColumnDefinition<String>(
+              valueKey: 'lastName',
+              title: const Text('Last name'),
+              valueAlignment: TextAlign.center),
+          ColumnDefinition<Gender>(
+              valueKey: 'gender',
+              title: const Text('Gender'),
+              valueAlignment: TextAlign.center),
+          ColumnDefinition<List<String>?>(
+              valueKey: 'food',
+              title: const Text('Favourite Food'),
+              valueAlignment: TextAlign.center),
+        ], data: <Person>[
+          Person(age: 17, firstName: 'Hallo', lastName: 'Welt', gender: Gender.male, food: null),
+          Person(
+              age: 17,
+              firstName: 'Hallo',
+              lastName: 'Welt',
+              gender: Gender.male,
+              food: List.of(['this', 'that'])),
+          Person(
+              age: 17,
+              firstName: 'Hallo',
+              lastName: 'Welt',
+              gender: Gender.male,
+              food: List.of(['this', 'that'])),
+          Person(
+              age: 17,
+              firstName: 'Hallo',
+              lastName: 'Welt',
+              gender: Gender.male,
+              food: List.of(['this', 'that']))
+        ]),
       ),
     );
   }
@@ -68,27 +69,23 @@ class Person {
   String firstName;
   String lastName;
   Gender gender;
-  List<String> favouriteFood;
+  List<String>? food;
 
   Person({
     required this.age,
     required this.firstName,
     required this.lastName,
     required this.gender,
-    required this.favouriteFood,
+    required this.food,
   });
 
   Map<String, dynamic> toJson() => {
-        'age': age,
-        'firstName': firstName,
-        'lastName': lastName,
-        'gender': gender,
-        'favouriteFood': favouriteFood,
-      };
+    'age': age,
+    'firstName': firstName,
+    'lastName': lastName,
+    'gender': gender,
+    'food': food,
+  };
 }
 
-enum Gender {
-  male,
-  female,
-  diverse,
-}
+enum Gender { male, female, diverse, }
