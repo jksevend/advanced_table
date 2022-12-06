@@ -11,8 +11,10 @@ import 'package:flutter/material.dart';
 /// * [String] and [num]
 /// * [Enum] and [List]
 ///
-/// ### NOTE: For enum values [Enum.name] is used. Also you can customize the displaying text
-/// for a [List] by using the [AdvancedTableConfig].
+/// Consider that these types can be nullable as well. See [NullValueStrategy] for options
+/// what to display when a value is null.
+///
+/// NOTE: For enum values [Enum.name] is used. Also you can customize the displaying text for a [List] by using the [AdvancedTableConfig].
 class ColumnDefinition<T> {
   /// The key to be used to extract the value of an entry in [AdvancedTable.data]
   final String valueKey;
@@ -31,4 +33,15 @@ class ColumnDefinition<T> {
     required this.title,
     this.valueAlignment = TextAlign.start,
   }) : type = T;
+
+  /// Return true if [T] is nullable
+  bool get isNullable {
+    try {
+      null as T;
+      return true;
+    } catch(_) {
+      return false;
+    }
+  }
 }
+
