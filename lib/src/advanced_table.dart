@@ -1,18 +1,25 @@
 import 'package:advanced_table/advanced_table.dart';
 import 'package:flutter/material.dart';
 
-/// Creates an advanced table wrapper widget around `Table`.
+/// Creates an advanced table wrapper widget around [Table].
 ///
-/// `columnDefinitions` and `data` must be provided.
+/// [columnDefinitions] and [data] must be provided.
 class AdvancedTable extends StatefulWidget {
   /// Configuration info for each individual column
   final List<ColumnDefinition> columnDefinitions;
 
-  /// Data to be displayed
+  /// Data to be displayed.
   final List<Map<String, dynamic>> data;
 
-  /// Configuration info for this widget
-  final AdvancedTableConfig config;
+  /// Separator for a [ColumnDefinition<List>].
+  ///
+  /// Default is [ListSeparator.comma]
+  final ListSeparator listSeparator;
+
+  /// Bracket characters around the list e.g. `(1, 2, 3)`.
+  ///
+  /// Default is [ListBrackets.square]
+  final ListBrackets listBrackets;
 
   /// Border to be created
   final TableBorder? border = TableBorder.all();
@@ -21,7 +28,8 @@ class AdvancedTable extends StatefulWidget {
     super.key,
     required this.columnDefinitions,
     required this.data,
-    this.config = const AdvancedTableConfig(),
+    this.listSeparator = ListSeparator.comma,
+    this.listBrackets = ListBrackets.square,
     TableBorder? border,
   }) {
     final int columnCount = columnDefinitions.length;
@@ -58,7 +66,7 @@ class _AdvancedTableState extends State<AdvancedTable> {
     );
   }
 
-  /// Returns a `TableCell` widget using a `MapEntry` obtained
+  /// Returns a [TableCell] widget using a [MapEntry] obtained
   /// from [AdvancedTable.data]
   Widget _buildDataCell(final MapEntry<String, dynamic> entry) {
     // Find applicable column
@@ -87,11 +95,10 @@ class _AdvancedTableState extends State<AdvancedTable> {
       textValue = value.toString();
     } else if (value is Enum) {
       textValue = value.name;
+    } else if (value == null) {
     } else if (value is List) {
-      final String joined = value.join('${widget.config.listSeparator} ');
-      textValue = widget.config.listWrapper.left +
-          joined +
-          widget.config.listWrapper.right;
+      final String joined = value.join('${widget.listSeparator} ');
+      textValue = widget.listBrackets.left + joined + widget.listBrackets.right;
     } else {
       throw StateError('Type ${value.runtimeType} not supported');
     }
@@ -103,4 +110,64 @@ class _AdvancedTableState extends State<AdvancedTable> {
       ),
     );
   }
+}
+
+/// Define the brackets used when displaying a [List] in a cell.
+///
+/// Supported bracket types are:
+/// * parentheses: ()
+/// * curly: {}
+/// * square: []
+enum ListBrackets {
+  /// Use parentheses
+  parentheses,
+
+  /// Use curly brackets
+  curly,
+
+  /// Use square brackets
+  square;
+
+  /// Return the left (starting) character
+  String get left {
+    switch (this) {
+      case ListBrackets.parentheses:
+        return '(';
+      case ListBrackets.curly:
+        return '{';
+      case ListBrackets.square:
+        return '[';
+    }
+  }
+
+  /// Return the right (ending) character
+  String get right {
+    switch (this) {
+      case ListBrackets.parentheses:
+        return ')';
+      case ListBrackets.curly:
+        return '}';
+      case ListBrackets.square:
+        return ']';
+    }
+  }
+}
+
+/// Define the value to be displayed for [null]
+enum NullValue {
+  empty(''),
+  hyphen('-');
+
+  final String value;
+  const NullValue(this.value);
+}
+
+/// Define the separator between items when displaying a
+/// [List] in a Table
+enum ListSeparator {
+  comma(','),
+  semicolon(';');
+
+  final String value;
+  const ListSeparator(this.value);
 }
