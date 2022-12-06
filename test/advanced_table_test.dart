@@ -4,11 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('$AdvancedTable - Error tests', () {
-    test('$AdvancedTable - Count of definitions does not match count of keys of map entry', () {
+    test(
+        '$AdvancedTable - Count of definitions does not match count of keys of map entry',
+        () {
       // GIVEN
       final List<ColumnDefinition> definitions = [
-        ColumnDefinition<String>(valueKey: 'value1', title: const Text('Value 1')),
-        ColumnDefinition<String>(valueKey: 'value2', title: const Text('Value 2')),
+        ColumnDefinition<String>(
+            valueKey: 'value1', title: const Text('Value 1')),
+        ColumnDefinition<String>(
+            valueKey: 'value2', title: const Text('Value 2')),
       ];
 
       final List<Map<String, dynamic>> data = [
@@ -21,11 +25,14 @@ void main() {
           throwsA(isA<StateError>()));
     });
 
-    testWidgets('$AdvancedTable - Column definition not found', (widgetTester) async {
+    testWidgets('$AdvancedTable - Column definition not found',
+        (widgetTester) async {
       // GIVEN
       final List<ColumnDefinition> definitions = [
-        ColumnDefinition<String>(valueKey: 'value1', title: const Text('Value 1')),
-        ColumnDefinition<String>(valueKey: 'value32', title: const Text('Value 1')),
+        ColumnDefinition<String>(
+            valueKey: 'value1', title: const Text('Value 1')),
+        ColumnDefinition<String>(
+            valueKey: 'value32', title: const Text('Value 1')),
       ];
 
       final List<Map<String, dynamic>> data = [
@@ -33,7 +40,8 @@ void main() {
         {'value1': 'Hallo', 'value2': 'World'},
       ];
 
-      final AdvancedTable table = AdvancedTable(columnDefinitions: definitions, data: data);
+      final AdvancedTable table =
+          AdvancedTable(columnDefinitions: definitions, data: data);
 
       // WHEN
       await widgetTester.pumpWidget(table);
@@ -42,11 +50,13 @@ void main() {
       expect(widgetTester.takeException(), isInstanceOf<StateError>());
     });
 
-    testWidgets('$AdvancedTable - Column definition type and value type does not match',
+    testWidgets(
+        '$AdvancedTable - Column definition type and value type does not match',
         (widgetTester) async {
       // GIVEN
       final List<ColumnDefinition> definitions = [
-        ColumnDefinition<String>(valueKey: 'value1', title: const Text('Value 1')),
+        ColumnDefinition<String>(
+            valueKey: 'value1', title: const Text('Value 1')),
         ColumnDefinition<int>(valueKey: 'value2', title: const Text('Value 1')),
       ];
 
@@ -55,7 +65,8 @@ void main() {
         {'value1': 'Hallo', 'value2': 'World'},
       ];
 
-      final AdvancedTable table = AdvancedTable(columnDefinitions: definitions, data: data);
+      final AdvancedTable table =
+          AdvancedTable(columnDefinitions: definitions, data: data);
 
       // WHEN
       await widgetTester.pumpWidget(table);
@@ -64,10 +75,12 @@ void main() {
       expect(widgetTester.takeException(), isInstanceOf<StateError>());
     });
 
-    testWidgets('$AdvancedTable - Column definition type not supported', (widgetTester) async {
+    testWidgets('$AdvancedTable - Column definition type not supported',
+        (widgetTester) async {
       // GIVEN
       final List<ColumnDefinition> definitions = [
-        ColumnDefinition<String>(valueKey: 'value1', title: const Text('Value 1')),
+        ColumnDefinition<String>(
+            valueKey: 'value1', title: const Text('Value 1')),
         ColumnDefinition<Map>(valueKey: 'value2', title: const Text('Value 1')),
       ];
 
@@ -82,13 +95,63 @@ void main() {
         },
       ];
 
-      final AdvancedTable table = AdvancedTable(columnDefinitions: definitions, data: data);
+      final AdvancedTable table =
+          AdvancedTable(columnDefinitions: definitions, data: data);
 
       // WHEN
       await widgetTester.pumpWidget(table);
 
       // THEN
       expect(widgetTester.takeException(), isInstanceOf<StateError>());
+    });
+  });
+
+  group('$AdvancedTable - Structural tests', () {
+    testWidgets('$AdvancedTable - Basic table structure is created',
+        (widgetTester) async {
+      // GIVEN
+      final List<ColumnDefinition> definitions = [
+        ColumnDefinition<String>(
+            valueKey: 'value1', title: const Text('Value 1')),
+        ColumnDefinition<String>(
+            valueKey: 'value2', title: const Text('Value 1')),
+      ];
+
+      final List<Map<String, dynamic>> data = [
+        {
+          'value1': 'Hello',
+          'value2': 'World',
+        },
+        {
+          'value1': 'Hallo',
+          'value2': 'World',
+        },
+      ];
+
+      final AdvancedTable table =
+          AdvancedTable(columnDefinitions: definitions, data: data);
+
+      final int expectedCells =
+          definitions.length * data.length + definitions.length;
+
+      // WHEN
+      await widgetTester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: table,
+          ),
+        ),
+      );
+
+      await widgetTester.pumpAndSettle();
+
+      // THEN
+      expect(find.byType(Table), findsOneWidget);
+      expect(find.byType(TableCell), findsNWidgets(expectedCells));
+
+      final Table displayedTable = widgetTester.firstWidget(find.byType(Table));
+      final TableBorder expectedBorder = TableBorder.all();
+      expect(displayedTable.border, expectedBorder);
     });
   });
 }
