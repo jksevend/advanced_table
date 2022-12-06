@@ -1,6 +1,8 @@
 name: advanced_table
 description: A table widget providing advanced functionality
 version: 0.0.1
+repository: https://github.com/jksevend/advanced_table
+issue_tracker: https://github.com/jksevend/advanced_table/issues
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
