@@ -47,7 +47,7 @@ class AdvancedTable<T> extends StatefulWidget {
       try {
         final Map<String, dynamic> jsonMap = value.toJson();
         _parsedData.add(jsonMap);
-      } on NoSuchMethodError catch(_) {
+      } on NoSuchMethodError catch (_) {
         throw NoSuchMethodError.withInvocation(value, value.toJson());
       }
     }
@@ -80,7 +80,9 @@ class _AdvancedTableState extends State<AdvancedTable> {
               .toList(),
         ),
         ...widget._parsedData.map((jsonMap) => TableRow(
-            children: jsonMap.entries.map((mapEntry) => _buildDataCell(mapEntry)).toList()))
+            children: jsonMap.entries
+                .map((mapEntry) => _buildDataCell(mapEntry))
+                .toList()))
       ],
     );
   }
@@ -89,9 +91,11 @@ class _AdvancedTableState extends State<AdvancedTable> {
   /// from parsing [AdvancedTable.data]
   Widget _buildDataCell(final MapEntry<String, dynamic> entry) {
     // Find applicable column
-    final ColumnDefinition columnDefinition = widget.columnDefinitions.firstWhere(
+    final ColumnDefinition columnDefinition =
+        widget.columnDefinitions.firstWhere(
       (element) => element.valueKey == entry.key,
-      orElse: () => throw StateError('No column definition found for ${entry.key}'),
+      orElse: () =>
+          throw StateError('No column definition found for ${entry.key}'),
     );
 
     final dynamic value = entry.value;
@@ -175,6 +179,7 @@ enum ListBrackets {
 enum NullValueStrategy {
   /// Display en empty String
   empty(''),
+
   /// Display an hyphen
   hyphen('-');
 
@@ -188,6 +193,7 @@ enum NullValueStrategy {
 enum ListSeparator {
   /// Use commas
   comma(','),
+
   /// Use semicolons
   semicolon(';');
 

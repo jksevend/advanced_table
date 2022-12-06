@@ -39,9 +39,8 @@ class ColumnDefinition<T> {
     try {
       null as T;
       return true;
-    } catch(_) {
+    } catch (_) {
       return false;
     }
   }
 }
-
