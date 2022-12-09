@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/jksevend/advanced_table/compare/advanced_table-v0.1.0...advanced_table-v1.0.0) (2022-12-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* ColumnDefinition takes a String instead of a whole Text widget. Customization follows
+
+### Features
+
+* Introduce actions space above table ([e5eaace](https://github.com/jksevend/advanced_table/commit/e5eaace2aa40dc08e2aa1cc1602a562dd35646d1))
+
 ## [0.1.0](https://github.com/jksevend/advanced_table/compare/advanced_table-v0.0.1...advanced_table-v0.1.0) (2022-12-06)
 
 
