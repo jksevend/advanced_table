@@ -20,7 +20,7 @@ in their JSON representation.
 First add the dependency into your ```pubspec.yaml```:
 ```
 dependencies:
-    advanced_table: ^0.1.0
+    advanced_table: ^1.0.0
 ```
 
 **OR**
