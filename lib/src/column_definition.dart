@@ -2,7 +2,7 @@ import 'package:advanced_table/advanced_table.dart';
 import 'package:flutter/material.dart';
 
 /// Configuration data for a single column. The type of a value of an entry in
-/// [AdvancedTable.data] must correspond to [T] of this definition. In addition to that
+/// [AdvancedTable._parsedData] must correspond to [T] of this definition. In addition to that
 /// an entries key must correspond to [valueKey].
 ///
 /// A [valueKey] and [title] must be provided.

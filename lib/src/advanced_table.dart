@@ -31,6 +31,7 @@ class AdvancedTable<T> extends StatefulWidget {
   /// Border to be created
   final TableBorder? border = TableBorder.all();
 
+  /// Contains the parsed JSON representation of each [T] in [data]
   final List<Map<String, dynamic>> _parsedData = [];
 
   AdvancedTable({
@@ -80,9 +81,7 @@ class _AdvancedTableState extends State<AdvancedTable> {
               .toList(),
         ),
         ...widget._parsedData.map((jsonMap) => TableRow(
-            children: jsonMap.entries
-                .map((mapEntry) => _buildDataCell(mapEntry))
-                .toList()))
+            children: jsonMap.entries.map((mapEntry) => _buildDataCell(mapEntry)).toList()))
       ],
     );
   }
@@ -91,11 +90,9 @@ class _AdvancedTableState extends State<AdvancedTable> {
   /// from parsing [AdvancedTable.data]
   Widget _buildDataCell(final MapEntry<String, dynamic> entry) {
     // Find applicable column
-    final ColumnDefinition columnDefinition =
-        widget.columnDefinitions.firstWhere(
+    final ColumnDefinition columnDefinition = widget.columnDefinitions.firstWhere(
       (element) => element.valueKey == entry.key,
-      orElse: () =>
-          throw StateError('No column definition found for ${entry.key}'),
+      orElse: () => throw StateError('No column definition found for ${entry.key}'),
     );
 
     final dynamic value = entry.value;
@@ -142,37 +139,20 @@ class _AdvancedTableState extends State<AdvancedTable> {
 /// * square: []
 enum ListBrackets {
   /// Use parentheses
-  parentheses,
+  parentheses('(', ')'),
 
   /// Use curly brackets
-  curly,
+  curly('{', '}'),
 
   /// Use square brackets
-  square;
+  square('[', ']');
 
-  /// Return the left (starting) character
-  String get left {
-    switch (this) {
-      case ListBrackets.parentheses:
-        return '(';
-      case ListBrackets.curly:
-        return '{';
-      case ListBrackets.square:
-        return '[';
-    }
-  }
+  /// The left side of a bracket
+  final String left;
+  /// The right side of a bracket
+  final String right;
 
-  /// Return the right (ending) character
-  String get right {
-    switch (this) {
-      case ListBrackets.parentheses:
-        return ')';
-      case ListBrackets.curly:
-        return '}';
-      case ListBrackets.square:
-        return ']';
-    }
-  }
+  const ListBrackets(this.left, this.right);
 }
 
 /// Define the value to be displayed for [null]
