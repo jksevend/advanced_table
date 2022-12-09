@@ -126,12 +126,12 @@ For now only ``String``, ``num``, ``Enum`` and ``List`` types are available for 
 
 ## Future Updates
 The plan right now is to add support to:
-* Search and filter through data
+* Search, filter and order data
 * Make data editable
 * Move the order of columns
 * Support for ``Date`` and ``Uri`` types
-* Add ``TextAlign`` for the header cells
 * Provide an ``actions`` space similar to ``AppBar``
+* Styling customizations
 
 To stay updated on the progress visit the [Advanced Table Project Board](https://github.com/users/jksevend/projects/11)
 
