@@ -133,7 +133,8 @@ class _AdvancedTableCore extends StatelessWidget {
                 (columnDefinition) => TableCell(
                   child: Text(
                     columnDefinition.title,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -143,7 +144,9 @@ class _AdvancedTableCore extends StatelessWidget {
 
         /// Data rows
         ...data.map((jsonMap) => TableRow(
-            children: jsonMap.entries.map((mapEntry) => _buildDataCell(mapEntry)).toList()))
+            children: jsonMap.entries
+                .map((mapEntry) => _buildDataCell(mapEntry))
+                .toList()))
       ],
     );
   }
@@ -154,7 +157,8 @@ class _AdvancedTableCore extends StatelessWidget {
     // Find applicable column
     final ColumnDefinition columnDefinition = columnDefinitions.firstWhere(
       (element) => element.valueKey == entry.key,
-      orElse: () => throw StateError('No column definition found for ${entry.key}'),
+      orElse: () =>
+          throw StateError('No column definition found for ${entry.key}'),
     );
 
     final dynamic value = entry.value;

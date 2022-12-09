@@ -11,10 +11,8 @@ void main() {
         () {
       // GIVEN
       final List<ColumnDefinition> definitions = [
-        ColumnDefinition<String>(
-            valueKey: 'valueOne', title: 'Value 1'),
-        ColumnDefinition<String>(
-            valueKey: 'valueTwo', title: 'Value 2'),
+        ColumnDefinition<String>(valueKey: 'valueOne', title: 'Value 1'),
+        ColumnDefinition<String>(valueKey: 'valueTwo', title: 'Value 2'),
         ColumnDefinition<String>(valueKey: 'nan', title: 'Nan')
       ];
 
@@ -32,10 +30,8 @@ void main() {
     test('$AdvancedTable - Generic type does not have toJson method', () {
       // GIVEN
       final List<ColumnDefinition> definitions = [
-        ColumnDefinition<String>(
-            valueKey: 'valueOne', title: 'Value 1'),
-        ColumnDefinition<String>(
-            valueKey: 'valueTwo', title: 'Value 2'),
+        ColumnDefinition<String>(valueKey: 'valueOne', title: 'Value 1'),
+        ColumnDefinition<String>(valueKey: 'valueTwo', title: 'Value 2'),
         ColumnDefinition<String>(valueKey: 'nan', title: 'Nan')
       ];
 
@@ -54,10 +50,8 @@ void main() {
         (widgetTester) async {
       // GIVEN
       final List<ColumnDefinition> definitions = [
-        ColumnDefinition<String>(
-            valueKey: 'valueOne', title: 'Value 1'),
-        ColumnDefinition<String>(
-            valueKey: 'value32', title: 'Value 1'),
+        ColumnDefinition<String>(valueKey: 'valueOne', title: 'Value 1'),
+        ColumnDefinition<String>(valueKey: 'value32', title: 'Value 1'),
       ];
 
       final List<TestData> testData = [
@@ -79,10 +73,8 @@ void main() {
         (widgetTester) async {
       // GIVEN
       final List<ColumnDefinition> definitions = [
-        ColumnDefinition<String>(
-            valueKey: 'valueOne', title: 'Value 1'),
-        ColumnDefinition<int>(
-            valueKey: 'valueTwo', title: 'Value 1'),
+        ColumnDefinition<String>(valueKey: 'valueOne', title: 'Value 1'),
+        ColumnDefinition<int>(valueKey: 'valueTwo', title: 'Value 1'),
       ];
 
       final List<TestData> testData = [
@@ -103,10 +95,8 @@ void main() {
         (widgetTester) async {
       // GIVEN
       final List<ColumnDefinition> definitions = [
-        ColumnDefinition<String>(
-            valueKey: 'valueOne', title: 'Value 1'),
-        ColumnDefinition<Map>(
-            valueKey: 'valueTwo', title: 'Value 1'),
+        ColumnDefinition<String>(valueKey: 'valueOne', title: 'Value 1'),
+        ColumnDefinition<Map>(valueKey: 'valueTwo', title: 'Value 1'),
       ];
 
       final List<TestData> testData = [
@@ -129,10 +119,8 @@ void main() {
         (widgetTester) async {
       // GIVEN
       final List<ColumnDefinition> definitions = [
-        ColumnDefinition<String>(
-            valueKey: 'valueOne', title: 'Value 1'),
-        ColumnDefinition<String>(
-            valueKey: 'valueTwo', title: 'Value 1'),
+        ColumnDefinition<String>(valueKey: 'valueOne', title: 'Value 1'),
+        ColumnDefinition<String>(valueKey: 'valueTwo', title: 'Value 1'),
       ];
 
       final List<TestData> testData = [

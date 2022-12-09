@@ -41,7 +41,12 @@ class _ExampleAppState extends State<ExampleApp> {
             title: 'Favourite Food',
           ),
         ], data: <Person>[
-          Person(age: 17, firstName: 'Hallo', lastName: 'Welt', gender: Gender.male, food: null),
+          Person(
+              age: 17,
+              firstName: 'Hallo',
+              lastName: 'Welt',
+              gender: Gender.male,
+              food: null),
           Person(
               age: 17,
               firstName: 'Hallo',
