@@ -13,6 +13,8 @@ class AdvancedTable<T> extends StatefulWidget {
   /// Data to be displayed.
   final List<T> data;
 
+  final List<Widget>? actions;
+
   /// Separator for a [ColumnDefinition<List>].
   ///
   /// Default is [ListSeparator.comma]
@@ -38,6 +40,7 @@ class AdvancedTable<T> extends StatefulWidget {
     super.key,
     required this.columnDefinitions,
     required this.data,
+    this.actions,
     this.listSeparator = ListSeparator.comma,
     this.listBrackets = ListBrackets.square,
     this.nullValue = NullValueStrategy.hyphen,
@@ -70,17 +73,76 @@ class AdvancedTable<T> extends StatefulWidget {
 class _AdvancedTableState extends State<AdvancedTable> {
   @override
   Widget build(BuildContext context) {
+    return widget.actions != null
+        ? Column(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                      left: BorderSide(width: 1),
+                      top: BorderSide(width: 1),
+                      right: BorderSide(width: 1)),
+                ),
+                child: Row(
+                  children: widget.actions!,
+                ),
+              ),
+              advancedTableCore,
+            ],
+          )
+        : advancedTableCore;
+  }
+
+  _AdvancedTableCore get advancedTableCore => _AdvancedTableCore(
+        columnDefinitions: widget.columnDefinitions,
+        data: widget._parsedData,
+        listBrackets: widget.listBrackets,
+        listSeparator: widget.listSeparator,
+        nullValue: widget.nullValue,
+        border: widget.border,
+      );
+}
+
+class _AdvancedTableCore extends StatelessWidget {
+  final List<ColumnDefinition> columnDefinitions;
+  final List<Map<String, dynamic>> data;
+  final TableBorder? border;
+  final ListSeparator listSeparator;
+  final ListBrackets listBrackets;
+  final NullValueStrategy nullValue;
+
+  const _AdvancedTableCore({
+    Key? key,
+    required this.columnDefinitions,
+    required this.data,
+    required this.listBrackets,
+    required this.listSeparator,
+    required this.nullValue,
+    this.border,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Table(
-      border: widget.border,
+      border: border,
       children: <TableRow>[
+        /// Header row
         TableRow(
-          children: widget.columnDefinitions
-              .map((columnDefinition) => TableCell(
-                    child: columnDefinition.title,
-                  ))
+          children: columnDefinitions
+              .map(
+                (columnDefinition) => TableCell(
+                  child: Text(
+                    columnDefinition.title,
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
               .toList(),
         ),
-        ...widget._parsedData.map((jsonMap) => TableRow(
+
+        /// Data rows
+        ...data.map((jsonMap) => TableRow(
             children: jsonMap.entries.map((mapEntry) => _buildDataCell(mapEntry)).toList()))
       ],
     );
@@ -90,7 +152,7 @@ class _AdvancedTableState extends State<AdvancedTable> {
   /// from parsing [AdvancedTable.data]
   Widget _buildDataCell(final MapEntry<String, dynamic> entry) {
     // Find applicable column
-    final ColumnDefinition columnDefinition = widget.columnDefinitions.firstWhere(
+    final ColumnDefinition columnDefinition = columnDefinitions.firstWhere(
       (element) => element.valueKey == entry.key,
       orElse: () => throw StateError('No column definition found for ${entry.key}'),
     );
@@ -114,10 +176,10 @@ class _AdvancedTableState extends State<AdvancedTable> {
     } else if (value is Enum) {
       textValue = value.name;
     } else if (value == null) {
-      textValue = widget.nullValue.value;
+      textValue = nullValue.value;
     } else if (value is List) {
-      final String joined = value.join('${widget.listSeparator.value} ');
-      textValue = widget.listBrackets.left + joined + widget.listBrackets.right;
+      final String joined = value.join('${listSeparator.value} ');
+      textValue = listBrackets.left + joined + listBrackets.right;
     } else {
       throw StateError('Type $valueType not supported');
     }
@@ -149,6 +211,7 @@ enum ListBrackets {
 
   /// The left side of a bracket
   final String left;
+
   /// The right side of a bracket
   final String right;
 

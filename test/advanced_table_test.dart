@@ -12,10 +12,10 @@ void main() {
       // GIVEN
       final List<ColumnDefinition> definitions = [
         ColumnDefinition<String>(
-            valueKey: 'valueOne', title: const Text('Value 1')),
+            valueKey: 'valueOne', title: 'Value 1'),
         ColumnDefinition<String>(
-            valueKey: 'valueTwo', title: const Text('Value 2')),
-        ColumnDefinition<String>(valueKey: 'nan', title: const Text('Nan'))
+            valueKey: 'valueTwo', title: 'Value 2'),
+        ColumnDefinition<String>(valueKey: 'nan', title: 'Nan')
       ];
 
       final List<TestData> testData = [
@@ -33,10 +33,10 @@ void main() {
       // GIVEN
       final List<ColumnDefinition> definitions = [
         ColumnDefinition<String>(
-            valueKey: 'valueOne', title: const Text('Value 1')),
+            valueKey: 'valueOne', title: 'Value 1'),
         ColumnDefinition<String>(
-            valueKey: 'valueTwo', title: const Text('Value 2')),
-        ColumnDefinition<String>(valueKey: 'nan', title: const Text('Nan'))
+            valueKey: 'valueTwo', title: 'Value 2'),
+        ColumnDefinition<String>(valueKey: 'nan', title: 'Nan')
       ];
 
       final List<TestDataNoToJson> testData = [
@@ -55,9 +55,9 @@ void main() {
       // GIVEN
       final List<ColumnDefinition> definitions = [
         ColumnDefinition<String>(
-            valueKey: 'valueOne', title: const Text('Value 1')),
+            valueKey: 'valueOne', title: 'Value 1'),
         ColumnDefinition<String>(
-            valueKey: 'value32', title: const Text('Value 1')),
+            valueKey: 'value32', title: 'Value 1'),
       ];
 
       final List<TestData> testData = [
@@ -80,9 +80,9 @@ void main() {
       // GIVEN
       final List<ColumnDefinition> definitions = [
         ColumnDefinition<String>(
-            valueKey: 'valueOne', title: const Text('Value 1')),
+            valueKey: 'valueOne', title: 'Value 1'),
         ColumnDefinition<int>(
-            valueKey: 'valueTwo', title: const Text('Value 1')),
+            valueKey: 'valueTwo', title: 'Value 1'),
       ];
 
       final List<TestData> testData = [
@@ -104,9 +104,9 @@ void main() {
       // GIVEN
       final List<ColumnDefinition> definitions = [
         ColumnDefinition<String>(
-            valueKey: 'valueOne', title: const Text('Value 1')),
+            valueKey: 'valueOne', title: 'Value 1'),
         ColumnDefinition<Map>(
-            valueKey: 'valueTwo', title: const Text('Value 1')),
+            valueKey: 'valueTwo', title: 'Value 1'),
       ];
 
       final List<TestData> testData = [
@@ -130,9 +130,9 @@ void main() {
       // GIVEN
       final List<ColumnDefinition> definitions = [
         ColumnDefinition<String>(
-            valueKey: 'valueOne', title: const Text('Value 1')),
+            valueKey: 'valueOne', title: 'Value 1'),
         ColumnDefinition<String>(
-            valueKey: 'valueTwo', title: const Text('Value 1')),
+            valueKey: 'valueTwo', title: 'Value 1'),
       ];
 
       final List<TestData> testData = [

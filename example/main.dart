@@ -21,23 +21,25 @@ class _ExampleAppState extends State<ExampleApp> {
       home: Scaffold(
         body: AdvancedTable<Person>(columnDefinitions: [
           ColumnDefinition<int>(
-              valueKey: 'age', title: const Text('Age'), valueAlignment: TextAlign.center),
+            valueKey: 'age',
+            title: 'Age',
+          ),
           ColumnDefinition<String>(
-              valueKey: 'firstName',
-              title: const Text('First name'),
-              valueAlignment: TextAlign.center),
+            valueKey: 'firstName',
+            title: 'First name',
+          ),
           ColumnDefinition<String>(
-              valueKey: 'lastName',
-              title: const Text('Last name'),
-              valueAlignment: TextAlign.center),
+            valueKey: 'lastName',
+            title: 'Last name',
+          ),
           ColumnDefinition<Gender>(
-              valueKey: 'gender',
-              title: const Text('Gender'),
-              valueAlignment: TextAlign.center),
+            valueKey: 'gender',
+            title: 'Gender',
+          ),
           ColumnDefinition<List<String>?>(
-              valueKey: 'food',
-              title: const Text('Favourite Food'),
-              valueAlignment: TextAlign.center),
+            valueKey: 'food',
+            title: 'Favourite Food',
+          ),
         ], data: <Person>[
           Person(age: 17, firstName: 'Hallo', lastName: 'Welt', gender: Gender.male, food: null),
           Person(
@@ -80,12 +82,16 @@ class Person {
   });
 
   Map<String, dynamic> toJson() => {
-    'age': age,
-    'firstName': firstName,
-    'lastName': lastName,
-    'gender': gender,
-    'food': food,
-  };
+        'age': age,
+        'firstName': firstName,
+        'lastName': lastName,
+        'gender': gender,
+        'food': food,
+      };
 }
 
-enum Gender { male, female, diverse, }
+enum Gender {
+  male,
+  female,
+  diverse,
+}

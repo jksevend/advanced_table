@@ -23,7 +23,7 @@ class ColumnDefinition<T> {
   final TextAlign valueAlignment;
 
   /// Text to be displayed in the first row of this column
-  final Text title;
+  final String title;
 
   /// Type of the definition [T] determining the transformation of the value
   final Type type;

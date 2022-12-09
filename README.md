@@ -35,7 +35,7 @@ import 'package:advanced_table/advanced_table.dart';
 ```
 
 ## Showcase
-<a href="https://ibb.co/jHDjRLv"><img src="https://i.ibb.co/wY42sKN/Screenshot-2022-12-06-185425.png" alt="Screenshot-2022-12-06-185425" border="0" /></a>
+<a href="https://ibb.co/PFx8vM3"><img src="https://i.ibb.co/2WqB1Sm/Screenshot-2022-12-09-202536.png" alt="Screenshot-2022-12-09-202536" border="0" /></a>
 
 ## Usage
 Since the table works by providing generic data, create a simple data class. Make sure you provide a ``toJson`` method or otherwise the table won't work due to limitation with reflection in Flutter:
