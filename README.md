@@ -130,7 +130,6 @@ The plan right now is to add support to:
 * Make data editable
 * Move the order of columns
 * Support for ``Date`` and ``Uri`` types
-* Provide an ``actions`` space similar to ``AppBar``
 * Styling customizations
 
 To stay updated on the progress visit the [Advanced Table Project Board](https://github.com/users/jksevend/projects/11)
