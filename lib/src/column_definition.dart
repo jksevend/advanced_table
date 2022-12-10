@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 /// The currently allowed types for [T] are:
 /// * [String] and [num]
 /// * [Enum] and [List]
+/// * [DateTime] (ISO8601) and [Uri]
 ///
 /// Consider that these types can be nullable as well. See [NullValueStrategy] for options
 /// what to display when a value is null.
@@ -33,6 +34,10 @@ class ColumnDefinition<T> {
     required this.title,
     this.valueAlignment = TextAlign.start,
   }) : type = T;
+
+  bool get isUri {
+    return type == Uri;
+  }
 
   /// Return true if [T] is nullable
   bool get isNullable {

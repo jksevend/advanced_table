@@ -1,5 +1,7 @@
 import 'package:advanced_table/advanced_table.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Creates an advanced table wrapper widget around [Table].
 ///
@@ -13,6 +15,7 @@ class AdvancedTable<T> extends StatefulWidget {
   /// Data to be displayed.
   final List<T> data;
 
+  /// Widgets to be displayed above the [AdvancedTable]
   final List<Widget>? actions;
 
   /// Separator for a [ColumnDefinition<List>].
@@ -103,6 +106,9 @@ class _AdvancedTableState extends State<AdvancedTable> {
       );
 }
 
+/// The core of an [AdvancedTable]. It contains the header row
+/// and all the data rows.
+/// Additionally
 class _AdvancedTableCore extends StatelessWidget {
   final List<ColumnDefinition> columnDefinitions;
   final List<Map<String, dynamic>> data;
@@ -164,13 +170,18 @@ class _AdvancedTableCore extends StatelessWidget {
     final dynamic value = entry.value;
 
     // Check if types match
+    // For nullable types e.g. String? the runtimeType will be Null
+    // and for Uri types _SimpleUri. Exclude them from the check.
     final Type columnDefinitionType = columnDefinition.type;
     final Type valueType = value.runtimeType;
-    if (!columnDefinition.isNullable && columnDefinitionType != valueType) {
+    if (!columnDefinition.isNullable &&
+        !columnDefinition.isUri &&
+        columnDefinitionType != valueType) {
       throw StateError(
           'Provided type $valueType of value $value does not match column definition type $columnDefinitionType');
     }
 
+    bool isLink = false;
     dynamic textValue;
     // Check type and transform value
     if (value is String) {
@@ -179,6 +190,11 @@ class _AdvancedTableCore extends StatelessWidget {
       textValue = value.toString();
     } else if (value is Enum) {
       textValue = value.name;
+    } else if (value is DateTime) {
+      textValue = value.toIso8601String();
+    } else if (value is Uri) {
+      textValue = value.toString();
+      isLink = true;
     } else if (value == null) {
       textValue = nullValue.value;
     } else if (value is List) {
@@ -188,12 +204,28 @@ class _AdvancedTableCore extends StatelessWidget {
       throw StateError('Type $valueType not supported');
     }
 
-    return TableCell(
-      child: Text(
-        textValue,
-        textAlign: columnDefinition.valueAlignment,
-      ),
-    );
+    return isLink
+        ? TableCell(
+            child: RichText(
+              text: TextSpan(
+                  text: textValue,
+                  style: const TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      launchUrl(Uri.parse(textValue));
+                    }),
+              textAlign: columnDefinition.valueAlignment,
+            ),
+          )
+        : TableCell(
+            child: Text(
+              textValue,
+              textAlign: columnDefinition.valueAlignment,
+            ),
+          );
   }
 }
 

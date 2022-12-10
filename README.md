@@ -69,7 +69,7 @@ pass a list of your objects. However, in addition to that you provide a ``Column
 return MaterialApp(
       title: 'Example',
       home: Scaffold(
-        body: AdvancedTable(
+        body: AdvancedTable<Person>(
           columnDefinitions: [
             ColumnDefinition<int>(valueKey: 'age', title: const Text('Age')),
             ColumnDefinition<String>(
