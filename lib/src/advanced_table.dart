@@ -21,6 +21,10 @@ class AdvancedTable<T> extends StatefulWidget {
   /// Widgets to be displayed above the [AdvancedTable]
   final List<Widget>? actions;
 
+  /// Keys of the result [Map] of a ``toJson`` call to ignore
+  /// when building the table content.
+  final List<String>? ignoringKeys;
+
   /// Separator for a [ColumnDefinition<List>].
   ///
   /// Default is [ListSeparator.comma]
@@ -51,16 +55,12 @@ class AdvancedTable<T> extends StatefulWidget {
     this.listBrackets = ListBrackets.square,
     this.nullValue = NullValueStrategy.hyphen,
     TableBorder? border,
+    this.ignoringKeys,
   }) {
-    // Parsing objects to maps
-    for (dynamic value in data) {
-      try {
-        final Map<String, dynamic> jsonMap = value.toJson();
-        _parsedData.add(jsonMap);
-      } on NoSuchMethodError catch (_) {
-        throw NoSuchMethodError.withInvocation(value, value.toJson());
-      }
-    }
+    // Parse generic data into Map
+    _parseData();
+    // Remove keys to ignore
+    _removeEntries();
     // Check if the keys' length of each map entry matches the length of
     // defined column definitions
     final int columnCount = columnDefinitions.length;
@@ -74,6 +74,40 @@ class AdvancedTable<T> extends StatefulWidget {
 
   @override
   State<AdvancedTable> createState() => _AdvancedTableState();
+
+  /// Iterates over [data] and calls ``toJson`` to obtain the JSON
+  /// representation of [T]. Stores the Map in [_parsedData].
+  void _parseData() {
+    for (dynamic value in data) {
+      try {
+        final Map<String, dynamic> jsonMap = value.toJson();
+        _parsedData.add(jsonMap);
+      } on NoSuchMethodError catch (_) {
+        throw NoSuchMethodError.withInvocation(value, value.toJson());
+      }
+    }
+  }
+
+  /// Remove entries of [_parsedData] which occur in [ignoringKeys].
+  void _removeEntries() {
+    if (ignoringKeys != null && ignoringKeys!.isNotEmpty) {
+      final List<String> keys = ignoringKeys as List<String>;
+
+      // Check if one of the keys to ignore is defined already
+      for (var definition in columnDefinitions) {
+        if (keys.contains(definition.valueKey)) {
+          throw StateError('Column definition ${definition.valueKey} found in keys to ignore $ignoringKeys');
+        }
+      }
+
+      // Remove the keys
+      for (var map in _parsedData) {
+        for (var key in keys) {
+          map.remove(key);
+        }
+      }
+    }
+  }
 }
 
 class _AdvancedTableState extends State<AdvancedTable> {
