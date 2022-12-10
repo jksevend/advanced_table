@@ -35,6 +35,7 @@ class ColumnDefinition<T> {
     this.valueAlignment = TextAlign.start,
   }) : type = T;
 
+  /// Check if [T] is a [Uri]
   bool get isUri {
     return type == Uri;
   }

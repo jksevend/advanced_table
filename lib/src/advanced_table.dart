@@ -7,6 +7,9 @@ import 'package:url_launcher/url_launcher.dart';
 ///
 /// [T] should be a custom object with a [toJson] method.
 ///
+/// Extra space above the widget is provided and can be filled
+/// by providing [actions].
+///
 /// [columnDefinitions] and [data] must be provided.
 class AdvancedTable<T> extends StatefulWidget {
   /// Configuration info for each individual column

@@ -10,6 +10,7 @@ in their JSON representation.
 * [Getting started](#getting-started)
 * [Showcase](#showcase)
 * [Usage](#usage)
+    * [Actions](#actions)
     * [Null values](#null-values)
     * [List display text](#list-display-text)
 * [Limitations](#limitations)
@@ -35,8 +36,7 @@ import 'package:advanced_table/advanced_table.dart';
 ```
 
 ## Showcase
-<a href="https://ibb.co/PFx8vM3"><img src="https://i.ibb.co/2WqB1Sm/Screenshot-2022-12-09-202536.png" alt="Screenshot-2022-12-09-202536" border="0" /></a>
-
+<a href="https://ibb.co/SXjKtz1"><img src="https://i.ibb.co/bg0rsky/Screenshot-2022-12-10-123809.png" alt="Screenshot-2022-12-10-123809" border="0"></a>
 ## Usage
 Since the table works by providing generic data, create a simple data class. Make sure you provide a ``toJson`` method or otherwise the table won't work due to limitation with reflection in Flutter:
 ```
@@ -96,6 +96,19 @@ return MaterialApp(
     );
 ```
 
+### Actions
+Space above the header row of an ``AdvancedTable`` where utility widgets can be placed:
+
+```
+AdvancedTable<Person>(
+          columnDefinitions: ...,
+          data: ...,
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.sort)),
+          ]
+        ),
+```
+
 ### Null Values
 The ``AdvancedTable`` can display ``null`` values too. Just make sure to make your type nullable for a ``ColumnDefinition``:
 ```
@@ -112,7 +125,7 @@ Right now the ``listSeparator`` and the ``listBrackets`` can be customized. By d
 
 Just pass your desired values when creating an ``AdvancedTable``:
 ```
-AdvancedTable(
+AdvancedTable<Person>(
           columnDefinitions: ...,
           data: ...,
           listSeparator: ListSeparator.semicolon,
@@ -122,14 +135,13 @@ AdvancedTable(
 
 
 ## Limitations
-For now only ``String``, ``num``, ``Enum`` and ``List`` types are available for a ``ColumnDefinition``.
+For now only ``String``, ``num``, ``Enum``, ``DateTime``, ``Uri`` and ``List`` types are available for a ``ColumnDefinition``.
 
 ## Future Updates
 The plan right now is to add support to:
 * Search, filter and order data
 * Make data editable
 * Move the order of columns
-* Support for ``Date`` and ``Uri`` types
 * Styling customizations
 
 To stay updated on the progress visit the [Advanced Table Project Board](https://github.com/users/jksevend/projects/11)
