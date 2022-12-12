@@ -95,7 +95,8 @@ class AdvancedTable<T> extends StatefulWidget {
       // Check if one of the keys to ignore is defined already
       for (var definition in columnDefinitions) {
         if (keys.contains(definition.valueKey)) {
-          throw StateError('Column definition ${definition.valueKey} found in keys to ignore $ignoringKeys');
+          throw StateError(
+              'Column definition ${definition.valueKey} found in keys to ignore $ignoringKeys');
         }
       }
 
@@ -251,7 +252,7 @@ class _AdvancedTableCore extends StatelessWidget {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                       columnDefinition.linkValueClicked!(textValue);
+                      columnDefinition.linkValueClicked!(textValue);
                     }),
               textAlign: columnDefinition.valueAlignment,
             ),

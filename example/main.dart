@@ -21,13 +21,12 @@ class _ExampleAppState extends State<ExampleApp> {
       home: Scaffold(
         body: AdvancedTable<Person>(columnDefinitions: [
           ColumnDefinition<int>(
-            valueKey: 'age',
-            title: 'Age',
-            isLink: true,
-            linkValueClicked: (age) {
-              debugPrint(age.toString());
-            }
-          ),
+              valueKey: 'age',
+              title: 'Age',
+              isLink: true,
+              linkValueClicked: (age) {
+                debugPrint(age.toString());
+              }),
           ColumnDefinition<String>(
             valueKey: 'firstName',
             title: 'First name',
