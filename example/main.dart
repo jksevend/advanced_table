@@ -23,6 +23,10 @@ class _ExampleAppState extends State<ExampleApp> {
           ColumnDefinition<int>(
             valueKey: 'age',
             title: 'Age',
+            isLink: true,
+            linkValueClicked: (age) {
+              debugPrint(age.toString());
+            }
           ),
           ColumnDefinition<String>(
             valueKey: 'firstName',

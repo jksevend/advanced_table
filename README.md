@@ -13,7 +13,7 @@ in their JSON representation.
     * [Actions](#actions)
     * [Null values](#null-values)
     * [List display text](#list-display-text)
-* [Limitations](#limitations)
+    * [Limitations](#limitations)
 * [Future Updates](#future-updates)
 * [Bugs](#bugs-errors-etc)
 
