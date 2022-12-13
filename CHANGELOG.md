@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.0](https://github.com/jksevend/advanced_table/compare/advanced_table-v1.0.0...advanced_table-v1.1.0) (2022-12-13)
+
+
+### Features
+
+* ([#9](https://github.com/jksevend/advanced_table/issues/9)) Provide link functionality ([9835da0](https://github.com/jksevend/advanced_table/commit/9835da06d417d4322a1ac2a43544f850c9f49694))
+* Add ``ignoringKeys`` property to ``AdvancedTable`` ([6144ea9](https://github.com/jksevend/advanced_table/commit/6144ea9b6bd8ccb3a9870bacdd29706e1de20269))
+* Introduce DateTime and Uri types ([8fb417c](https://github.com/jksevend/advanced_table/commit/8fb417c9a33aef2204936114e5985ae55b138f4c))
+
 ## [1.0.0](https://github.com/jksevend/advanced_table/compare/advanced_table-v0.1.0...advanced_table-v1.0.0) (2022-12-09)
 
 
