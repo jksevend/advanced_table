@@ -11,9 +11,10 @@ in their JSON representation.
 * [Showcase](#showcase)
 * [Usage](#usage)
     * [Actions](#actions)
+    * [Links](#links)
     * [Null values](#null-values)
     * [List display text](#list-display-text)
-    * [Limitations](#limitations)
+* [Limitations](#limitations)
 * [Future Updates](#future-updates)
 * [Bugs](#bugs-errors-etc)
 
@@ -108,6 +109,24 @@ AdvancedTable<Person>(
           ]
         ),
 ```
+
+### Links
+The possibility exists to make cell values clickable by passing ``isLink`` to a 
+``ColumnDefinition``. You may also want to define a ``linkValueClicked`` to respond to the link being 
+clicked. This is default behaviour for ``Uri`` types.
+
+Example:
+```
+ColumnDefinition<String>(
+            valueKey: 'id',
+            title: 'User ID',
+            isLink: true,
+            linkValueClicked: (value) {
+                print('I was clicked');
+              },
+          ),
+```
+
 
 ### Null Values
 The ``AdvancedTable`` can display ``null`` values too. Just make sure to make your type nullable for a ``ColumnDefinition``:
