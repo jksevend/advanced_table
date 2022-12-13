@@ -13,6 +13,7 @@ in their JSON representation.
     * [Actions](#actions)
     * [Links](#links)
     * [Null values](#null-values)
+    * [Ignore values](#ignore-values)
     * [List display text](#list-display-text)
 * [Limitations](#limitations)
 * [Future Updates](#future-updates)
@@ -137,6 +138,19 @@ ColumnDefinition<List<String>?>(
 You can also configure a ``NullValueStrategy`` to customize the text displayed when a value is null.
 By default ``NullValueStrategy.hyphen`` is used.
 
+### Ignore values
+You have the possibility to ignore entries of the ``Person#toJson`` map. Just be sure to provide **NO** ``ColumnDefinition``
+for this field and add it's key to ``ignoringKeys`` when creating a table:
+
+```
+AdvancedTable<Person>(
+          /// ! Make sure to not provide a definition !
+          columnDefinitions: ...,
+          data: ...,
+          ignoringKeys: const <String>['firstName'],
+        ),
+```
+
 ### List Display Text
 When defining a ``ColumnDefinition<List>`` you can configure the way the displayed text in a cell looks.
 Right now the ``listSeparator`` and the ``listBrackets`` can be customized. By default ``ListSeparator.comma`` and
@@ -156,12 +170,15 @@ AdvancedTable<Person>(
 ## Limitations
 For now only ``String``, ``num``, ``Enum``, ``DateTime``, ``Uri`` and ``List`` types are available for a ``ColumnDefinition``.
 
+Up to this point ([v1.1.0](https://github.com/jksevend/advanced_table/releases/tag/advanced_table-v1.1.0)) 
+no searching/editing/sorting/filtering of data is possible but will follow in future updates.
 ## Future Updates
 The plan right now is to add support to:
 * Search, filter and order data
 * Make data editable
 * Move the order of columns
 * Styling customizations
+* Render conditional ``Icon`` or ``Widget`` inside cell
 
 To stay updated on the progress visit the [Advanced Table Project Board](https://github.com/users/jksevend/projects/11)
 
