@@ -1,6 +1,6 @@
 name: advanced_table
 description: A table widget providing advanced functionality and easier use by allowing the generic display of objects in their JSON representation.
-version: 1.0.0
+version: 1.1.0
 repository: https://github.com/jksevend/advanced_table
 issue_tracker: https://github.com/jksevend/advanced_table/issues
 
