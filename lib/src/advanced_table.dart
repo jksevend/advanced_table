@@ -1,7 +1,6 @@
 import 'package:advanced_table/advanced_table.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// Creates an advanced table wrapper widget around [Table].
 ///
@@ -219,7 +218,7 @@ class _AdvancedTableCore extends StatelessWidget {
           'Provided type $valueType of value $value does not match column definition type $columnDefinitionType');
     }
 
-    bool isLink = false;
+    bool isLink = columnDefinition.isLink;
     dynamic textValue;
     // Check type and transform value
     if (value is String) {
@@ -253,7 +252,7 @@ class _AdvancedTableCore extends StatelessWidget {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      launchUrl(Uri.parse(textValue));
+                      columnDefinition.linkValueClicked!(textValue);
                     }),
               textAlign: columnDefinition.valueAlignment,
             ),
